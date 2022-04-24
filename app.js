@@ -2,10 +2,12 @@
 const takenlijstInput = document.querySelector('.invoer');
 const takenlijstKnop = document.querySelector('.todo-knop');
 const takenlijst = document.querySelector('.lijst-met-taken');
+const filteroptie = document.querySelector(".takenlijstfilter");
 
-// event listerners
-takenlijstKnop.addEventListener('click', voegTaakToe)
+// event listeners
+takenlijstKnop.addEventListener('click', voegTaakToe);
 takenlijst.addEventListener('click', verwijderTaak);
+filteroptie.addEventListener('click', filterTaken);
 
 // alle functies
 
@@ -61,4 +63,13 @@ function verwijderTaak(event){
         const taakje = voorwerp.parentElement;
         taakje.classList.toggle('voltooid');
     }
+}
+
+function filterTaken(event){
+    const taken = takenlijst.childNodes;
+    taken.forEach(function(taak){
+        switch(event.target.value) {
+            
+        }
+    });
 }
