@@ -17,17 +17,26 @@
         <h1>Takenlijst</h1>
     </header>
 
+    <!-- dit is het invoerbalkje met de knop om taken toe te voegen -->
     <form>
         <input type = "text" class = "invoer">
         <button type ="submit" class = "todo-knop">
             <i class="fas fa-plus-square"></i>
         </button>
 
+        <div class="select">
+            <select name="takenDropDown" class="takenlijstfilter">
+                <option value="alles">Alle taken</option>
+                <option value="voltooid">Voltooid</option>
+                <option value="nogNietVoltooid">Nog niet voltooid</option>
+            </select>
+        </div>
     </form>
 
+    <!-- dit zijn alle taken -->
     <div class="takenlijst-container">
         <ul class="lijst-met-taken">
-            <!-- takenlijst? jazeker de hypotheker -->
+            <!-- wordt aangevuld door javascriptfunctionaliteit -->
 
         </ul>
     </div>
