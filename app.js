@@ -69,7 +69,16 @@ function filterTaken(event){
     const taken = takenlijst.childNodes;
     taken.forEach(function(taak){
         switch(event.target.value) {
-            
+            case "alles":
+                break;
+            case "voltooid":
+                if(taak.classList.contains('voltooid')){
+                    taak.style.display = 'flex';
+                }
+                else{
+                    taak.style.display = 'none';
+                }
+                
         }
     });
 }
