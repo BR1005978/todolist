@@ -1,37 +1,42 @@
 // selectors
-const takenlijstInput = document.querySelector('.invoer');
-const takenlijstKnop = document.querySelector('.todo-knop');
-const takenlijst = document.querySelector('.lijst-met-taken');
+const takenlijstInput = document.querySelector(".invoer");
+const takenlijstKnop = document.querySelector(".todo-knop");
+const takenlijst = document.querySelector(".lijst-met-taken");
 const filteroptie = document.querySelector(".takenlijstfilter");
 
 // event listeners
-takenlijstKnop.addEventListener('click', voegTaakToe);
-takenlijst.addEventListener('click', verwijderTaak);
-filteroptie.addEventListener('click', filterTaken);
+takenlijstKnop.addEventListener("click", voegTaakToe);
+takenlijst.addEventListener("click", verwijderTaak);
+filteroptie.addEventListener("click", filterTaken);
 
 // alle functies
 
-function oprotten(){
+function oprotten()
+{
     this.remove();
     console.log("opgerot");
 }
 
-function voegTaakToe(event){
+function voegTaakToe(event)
+{
     event.preventDefault();
-    console.log('voegTaakToe() wordt aangeroepen');
+    console.log("voegTaakToe() wordt aangeroepen");
     //taak div
     const taakDiv = document.createElement("div");
-    taakDiv.classList.add('taak');
+    taakDiv.classList.add("taak");
 
     //maak listitem
-    const nieuweTaak = document.createElement('li');
-    nieuweTaak.innerText= takenlijstInput.value;
-    nieuweTaak.classList.add('taak-item');
+    const nieuweTaak = document.createElement("li");
+    nieuweTaak.innerText = takenlijstInput.value;
+    nieuweTaak.classList.add("taak-item");
 
     taakDiv.appendChild(nieuweTaak);
 
+    // voeg taak toe aan lokale opslag
+    takenOpslaan(takenlijstInput.value);
+
     //knopje voor gedaan
-    const voltooidKnop = document.createElement('button');
+    const voltooidKnop = document.createElement("button");
     voltooidKnop.innerHTML = '<i class = "fas fa-check"></i>';
     voltooidKnop.classList.add("voltooidknopje");
     taakDiv.appendChild(voltooidKnop);
@@ -49,36 +54,98 @@ function voegTaakToe(event){
     takenlijstInput.value = "";
 }
 
-function verwijderTaak(event){
+function verwijderTaak(event)
+{
     console.log(event.target);
     const voorwerp = event.target;
     // verwijder todo
-    if(voorwerp.classList[0] === "verwijderknopje"){
+    if (voorwerp.classList[0] === "verwijderknopje")
+    {
         const taakje = voorwerp.parentElement;
         taakje.classList.add("verdwijn");
         taakje.addEventListener('transitionend', oprotten);
     }
 
-    if(voorwerp.classList[0] === "voltooidknopje"){
+    if (voorwerp.classList[0] === "voltooidknopje")
+    {
         const taakje = voorwerp.parentElement;
         taakje.classList.toggle('voltooid');
     }
 }
 
-function filterTaken(event){
-    const taken = takenlijst.childNodes;
-    taken.forEach(function(taak){
-        switch(event.target.value) {
+function filterTaken(event)
+{   
+    console.log("filterTaken wordt aangeroepen");
+    const taken = takenlijst.children;
+    console.log("dit is de taken const met takenlijst.childNodes: ", taken);
+
+    Array.from(taken).forEach(function (taak)
+    {   
+        switch (event.target.value)
+        {
             case "alles":
+                taak.style.display = "flex";
+                console.log("case alles, stel display in als flex")
                 break;
             case "voltooid":
-                if(taak.classList.contains('voltooid')){
-                    taak.style.display = 'flex';
+                if (taak.classList.contains("voltooid"))
+                {
+                    taak.style.display = "flex";
+                    console.log("case voltooid, stel display in als flex")
+                }
+                else
+                {
+                    taak.style.display = "none";
+                    console.log("case voltooid, stel display in als none")
+                }
+                break;
+            case "nogNietVoltooid":
+                if (!taak.classList.contains("voltooid")){
+                    taak.style.display = "flex";
+                    console.log("case nogNietVoltooid, stel display in als flex")
                 }
                 else{
-                    taak.style.display = 'none';
+                    taak.style.display = "none";
+                    console.log("case nogNietVoltooid, stel display in als none")
                 }
-                
+                break;
+
         }
     });
+}
+
+
+function takenOpslaan(taak){
+    //controleer op al bestaande opslagbestanden
+    let takenlijst;
+    // als hij er nog niet is, maak een nieuwe lege array aan
+    if (localStorage.getItem("takenlijstJSON") === null){
+        takenlijst = [];
+    }
+    // als hij er wel is, geef de waarde van die json shit door aan takenlijst
+
+    else{
+        takenlijst = JSON.parse(localStorage.getItem("takenlijstJSON"));
+    }
+
+    // voeg de taak toe aan de theoretische takenlijst
+    // daarna sla je die takenlijst lokaal op in je browser
+    takenlijst.push(taak);
+    localStorage.setItem('takenlijstJSON', JSON.stringify(takenlijst));
+
+     
+}
+
+function takenOphalen(){
+    let takenlijst;
+    if (localStorage.getItem("takenlijstJSON") === null){
+        takenlijst = [];
+    }
+    else{
+        takenlijst = JSON.parse(localstorage.getItem("takenlijstJSON"));
+    }
+
+    takenlijst.forEach(function(taak){
+
+    })
 }
