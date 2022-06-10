@@ -56,6 +56,9 @@ function voegTaakToe(event) {
 function verwijderTaak(event) {
     console.log("functie verwijderTaak(), dit is event.target: ", event.target);
     const voorwerp = event.target;
+    console.log(voorwerp.classList[0])
+    console.log(voorwerp.classList[1])
+    console.log(voorwerp.classList[2])
     // verwijder todo
     if (voorwerp.classList[0] === "verwijderknopje") {
         const taakje = voorwerp.parentElement;
@@ -181,5 +184,10 @@ function verwijderTaakUitOpslag(taak) {
 
     console.log("verwijderTaakUitOpslag() wordt aangeroepen. dit zijn de taken: ", taken);
     console.log("en dit is het taakje wat als argument gebruikt wordt in deze functie", taak);
+    console.log("dit is de naam van het element want je hebt aangeklikt, als het goed is: ", taak.children[0].innerText);
 
+    const taakpositie = taken.indexOf(taak.children[0].innerText);
+    taken.splice(taakpositie, 1);
+
+    localStorage.setItem("takenJSON", JSON.stringify(taken));
 }
